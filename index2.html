@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Bar with Loader and Back Button</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex items-center justify-center h-screen bg-gray-100">
+
+    <!-- Search Container -->
+    <div id="searchContainer" class="w-1/2">
+        <div class="relative">
+            <input id="searchInput" type="text" placeholder="Search here..." 
+                   class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" 
+                   oninput="clearResult()"/>
+            <div id="loader" class="absolute right-3 top-3 hidden">
+                <svg class="animate-spin h-6 w-6 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8h8a8 8 0 11-8 8H4a8 8 0 010-16z"></path>
+                </svg>
+            </div>
+        </div>
+
+        <button onclick="searchName()" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+            Search
+        </button>
+
+        <div id="result" class="mt-6 text-lg font-bold text-gray-700"></div>
+    </div>
+
+    <!-- Result Container -->
+    <div id="resultContainer" class="hidden w-1/2">
+        <div id="searchedName" class="text-xl font-bold text-gray-800"></div>
+        <a href="index.html"><button onclick="goBack()" class="mt-4 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+            Back
+        </button></a>
+    </div>
+
+    <script>
+        function clearResult() {
+            document.getElementById("result").innerHTML = ''; // clear result on input change
+        }
+
+        function searchName() {
+            const input = document.getElementById("searchInput").value;
+
+            if (input) {
+                // Show loader
+                document.getElementById("loader").classList.remove("hidden");
+
+                // Simulate an async operation (search) with a timeout
+                setTimeout(() => {
+                    // Hide loader
+                    document.getElementById("loader").classList.add("hidden");
+
+                    // Show the result container
+                    document.getElementById("resultContainer").classList.remove("hidden");
+
+                    // Display the searched name
+                    document.getElementById("searchedName").innerHTML = `You searched for: ${input}`;
+
+                    // Hide the search container
+                    document.getElementById("searchContainer").classList.add("hidden");
+
+                }, 1500); // 1.5 seconds delay to simulate searching
+            }
+        }
+
+        function goBack() {
+            // Hide the result container
+            document.getElementById("resultContainer").classList.add("hidden");
+
+            // Show the search container
+            document.getElementById("searchContainer").classList.remove("hidden");
+
+            // Clear the input field
+            document.getElementById("searchInput").value = '';
+        }
+    </script>
+
+</body>
+</html>
